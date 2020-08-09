@@ -1,6 +1,6 @@
 1. Tins
     -> Creating
-        -> Text
+        -> content
         -> Images
         -> voice notes
         -> gifs
