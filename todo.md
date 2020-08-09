@@ -9,6 +9,7 @@
 
     -> Delete
     -> Co-Tins
+    -> Liking
     long term
     -> QuoTins
     -> GeneTins

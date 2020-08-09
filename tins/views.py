@@ -1,11 +1,21 @@
 from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse
 from .models import Tins
+from .forms import TinsForm
 import random
 # Create your views here.
+def tin_create_view(request, *args, **kwargs):
+    form = TinsForm(request.POST or None)
+    if form.is_valid():
+        obj = form.save(commit=False)
+        obj.save()
+        form = TinsForm()
+    return render(request, 'components/form.html', context={"form":form})
+
 
 def home_view(request, *args, **kwargs):
     return render(request,"pages/home.html", context={}, status = 200)
+
 
 def tin_detail_view(request, tweet_id, *args, **kwargs):
     data = {

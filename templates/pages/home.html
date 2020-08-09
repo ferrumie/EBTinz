@@ -11,6 +11,14 @@
 loading...   
 </div>
 
+<div class="row">
+    <div class="col-md-4 mx-auto col-10">
+        <form action="/create" class="form" method="POST">
+            <input type="hidden">
+        </form>
+
+    </div>
+    </div>
 
 <script>
     function handleDidLike(tin_id, currentCount){
@@ -22,7 +30,7 @@ loading...
     }
 
     function formatTinElement(tin){
-        var formattedTin =  "<div class = 'col-12 col-md-10 mx-auto  border rounded py-3 md-3' id = 'tin-'>"+ tin.id + " <p>" + tin.content + "</p><div class = 'btn-group'>"+ LikeBtn(tin)+ "</div></div>"
+        var formattedTin =  "<div class = 'col-12 col-md-10 mx-auto  border rounded py-3' id = 'tin-'><p>" + tin.content + "</p><div class = 'btn-group'>"+ LikeBtn(tin)+ "</div></div>"+"<br>"
         return formattedTin
     }
     const tinsElement = document.getElementById("tins")
