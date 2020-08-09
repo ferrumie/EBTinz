@@ -1,0 +1,51 @@
+{% extends 'pages/base.html' %}
+
+{% block content %}
+
+<div class="row text-center">
+    <div class="col">
+        <h1>Latest Tins</h1>
+    </div>
+</div>
+    <div class="row" id="tins">
+loading...   
+</div>
+
+
+<script>
+    function handleDidLike(tin_id, currentCount){
+
+    }
+
+    function LikeBtn(tin){
+        return "<button class='btn btn-primary btn-sm' onclick = handleDidLike(" + tin.id + " , " + tin.likes +")>" + tin.likes + " Likes</button>"
+    }
+
+    function formatTinElement(tin){
+        var formattedTin =  "<div class = 'col-12 col-md-10 mx-auto  border rounded py-3 md-3' id = 'tin-'>"+ tin.id + " <p>" + tin.content + "</p><div class = 'btn-group'>"+ LikeBtn(tin)+ "</div></div>"
+        return formattedTin
+    }
+    const tinsElement = document.getElementById("tins")
+
+    const xhr = new XMLHttpRequest()
+    const method = 'GET' // 'POST'
+    const url = "/tins"
+    const responseType = "json"
+
+    xhr.responseType = responseType
+    xhr.open(method, url)
+    xhr.onload = function(){
+        const serverResponse = xhr.response
+        const listedItems = serverResponse.response
+        var finaltinsStr = "";
+        var i;
+        for (i = 0; i < listedItems.length; i++) {
+            var tinObj = listedItems[i]
+            var currentItem =formatTinElement(tinObj);
+            finaltinsStr += currentItem
+        };
+        tinsElement.innerHTML = finaltinsStr;
+    }
+    xhr.send()
+</script>
+{% endblock content %}
