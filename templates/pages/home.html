@@ -1,24 +1,30 @@
 {% extends 'pages/base.html' %}
 
 {% block content %}
-
-<div class="row text-center">
-    <div class="col">
-        <h1>Latest Tins</h1>
-    </div>
-</div>
-    <div class="row" id="tins">
-loading...   
-</div>
-
-<div class="row">
-    <div class="col-md-4 mx-auto col-10">
-        <form action="/create" class="form" method="POST">
-            <input type="hidden">
+<br> <br>
+<div class="row mb3">
+    <div class="col-md-4 mx-auto col-10 py-3">
+        <form action="/create/" class="form" method="POST">
+            {% csrf_token %}
+            <input type="hidden" value='/' name = "next" />
+            <textarea name="content" class="form-control"  placeholder="EBTinz!"></textarea> <br>
+            <button class="btn btn-primary">Tinz It</button>
         </form>
 
     </div>
     </div>
+
+<div class="row text-center">
+    <div class="col">
+        <h1>Latest Tinz</h1>
+    </div>
+</div>
+
+
+    <div class="row" id="tins">
+loading...   
+</div>
+
 
 <script>
     function handleDidLike(tin_id, currentCount){

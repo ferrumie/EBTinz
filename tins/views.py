@@ -6,9 +6,12 @@ import random
 # Create your views here.
 def tin_create_view(request, *args, **kwargs):
     form = TinsForm(request.POST or None)
+    next_url = request.POST.get("next") or None
     if form.is_valid():
         obj = form.save(commit=False)
         obj.save()
+        if next_url != None:
+            return redirect(next_url)
         form = TinsForm()
     return render(request, 'components/form.html', context={"form":form})
 
