@@ -29,7 +29,19 @@ loading...
 <script>
     function tinCreateFormDidSubmit(event) {
         event.preventDefault()
+        const myForm = event.target
+        const myFormData = new FormData(myForm)
+        const url = myForm.getAttribute("action")
+        const method = myForm.getAttribute("method")
+        const xhr = new XMLHttpRequest()
+        xhr.open(method, url)
+        xhr.onload = function(){
+        const serverResponse = xhr.response
+        const tinCreateFormEl = document.getElementById("tin-create-form")
+        loadTinz(tinCreateFormEl)
+
     }
+    xhr.send(myFormData)
 
     const tinCreateFormEl = document.getElementById("tin-create-form")
     tinCreateFormEl.addEventListener("submit", tinCreateFormDidSubmit)
