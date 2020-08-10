@@ -6,6 +6,8 @@ import random
 from django.conf import settings
 from django.utils.http import is_safe_url
 # Create your views here.
+
+ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 def tin_create_view(request, *args, **kwargs):
     form = TinsForm(request.POST or None)
     next_url = request.POST.get("next") or None

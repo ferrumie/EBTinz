@@ -4,9 +4,9 @@
 <br> <br>
 <div class="row mb3">
     <div class="col-md-4 mx-auto col-10 py-3">
-        <form action="create/" class="form" method="POST">
+        <form id = 'tin-create-form' action="create/" class="form" method="POST">
             {% csrf_token %}
-            <input type="hidden" value='/' name = "next" />
+            <input type="hidden" value='/' name = "next" >
             <textarea name="content" class="form-control"  placeholder="EBTinz!"></textarea> <br>
             <button class="btn btn-primary">Tinz It</button>
         </form>
@@ -27,25 +27,21 @@ loading...
 
 
 <script>
-    function handleDidLike(tin_id, currentCount){
-
+    function tinCreateFormDidSubmit(event) {
+        event.preventDefault()
     }
 
-    function LikeBtn(tin){
-        return "<button class='btn btn-primary btn-sm' onclick = handleDidLike(" + tin.id + " , " + tin.likes +")>" + tin.likes + " Likes</button>"
-    }
+    const tinCreateFormEl = document.getElementById("tin-create-form")
+    tinCreateFormEl.addEventListener("submit", tinCreateFormDidSubmit)
 
-    function formatTinElement(tin){
-        var formattedTin =  "<div class = 'col-12 col-md-10 mx-auto  border rounded py-3' id = 'tin-'><p>" + tin.content + "</p><div class = 'btn-group'>"+ LikeBtn(tin)+ "</div></div>"+"<br>"
-        return formattedTin
-    }
-    const tinsElement = document.getElementById("tins")
 
+    function loadTinz(tinzElement) {
+
+        
     const xhr = new XMLHttpRequest()
     const method = 'GET' // 'POST'
     const url = "/tins"
     const responseType = "json"
-
     xhr.responseType = responseType
     xhr.open(method, url)
     xhr.onload = function(){
@@ -58,8 +54,27 @@ loading...
             var currentItem =formatTinElement(tinObj);
             finaltinsStr += currentItem
         };
-        tinsElement.innerHTML = finaltinsStr;
+        tinsEl.innerHTML = finaltinsStr;
     }
     xhr.send()
+
+}
+
+loadTinz(tinsEl)
+    function handleDidLike(tin_id, currentCount){
+
+    }
+
+    function LikeBtn(tin){
+        return "<button class='btn btn-primary btn-sm' onclick = handleDidLike(" + tin.id + " , " + tin.likes +")>" + tin.likes + " Likes</button>"
+    }
+
+    function formatTinElement(tin){
+        var formattedTin =  "<div class = 'col-12 col-md-10 mx-auto  border rounded py-3' id = 'tin-'><p>" + tin.content + "</p><div class = 'btn-group'>"+ LikeBtn(tin)+ "</div></div>"+"<br>"
+        return formattedTin
+    }
+    const tinsEl = document.getElementById("tins")
+
+
 </script>
 {% endblock content %}
