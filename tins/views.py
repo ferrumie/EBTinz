@@ -1,8 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse,JsonResponse
 from .models import Tins
 from .forms import TinsForm
 import random
+from django.conf import settings
+from django.utils.http import is_safe_url
 # Create your views here.
 def tin_create_view(request, *args, **kwargs):
     form = TinsForm(request.POST or None)
@@ -10,11 +12,11 @@ def tin_create_view(request, *args, **kwargs):
     if form.is_valid():
         obj = form.save(commit=False)
         obj.save()
-        if next_url != None:
+        if next_url != None and is_safe_url(next_url,ALLOWED_HOSTS):
             return redirect(next_url)
         form = TinsForm()
     return render(request, 'components/form.html', context={"form":form})
-
+  
 
 def home_view(request, *args, **kwargs):
     return render(request,"pages/home.html", context={}, status = 200)
