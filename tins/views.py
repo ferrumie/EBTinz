@@ -5,15 +5,22 @@ from .forms import TinsForm
 import random
 from django.conf import settings
 from django.utils.http import is_safe_url
+from django.conf import settings
 # Create your views here.
 
 ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 def tin_create_view(request, *args, **kwargs):
-    print("ajax",request.is_ajax())
+    user = request.user
+    if not request.user.is_authenticated:
+        user = None
+        if request.is_ajax():
+            return JsonResponse({}, status=401)
+        return redirect(settings.LOGIN_URL)
     form = TinsForm(request.POST or None)
     next_url = request.POST.get("next") or None
     if form.is_valid():
         obj = form.save(commit=False)
+        obj.user = user
         obj.save()
         if request.is_ajax():
             return JsonResponse(obj.serialize(), status=201) 
