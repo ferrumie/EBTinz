@@ -44,12 +44,13 @@ loading...
 
     if (xhr.status === 201) {
       const newTin = xhr.response
-      console.log(newTin)
       const newTinElement = formatTinElement(newTin)
+      const ogHtml = tinzContainerElement.innerHTML
+      tinzContainerElement.innerHTML = newTinElement + ogHtml
+
       
     }
-    const tinzContainerElement = document.getElementById("tins")
-    loadTinz(tinzContainerElement)
+    
   }
   xhr.send(myFormData) 
 }

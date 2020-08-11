@@ -21,7 +21,7 @@ def tin_create_view(request, *args, **kwargs):
             return redirect(next_url)
         form = TinsForm()
     return render(request, 'components/form.html', context={"form":form})
-  
+    
 
 def home_view(request, *args, **kwargs):
     return render(request,"pages/home.html", context={}, status = 200)
