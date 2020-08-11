@@ -20,8 +20,12 @@ def tin_create_view(request, *args, **kwargs):
         if next_url != None and is_safe_url(next_url,ALLOWED_HOSTS):
             return redirect(next_url)
         form = TinsForm()
+
+    if form.errors:
+        if request.is_ajax():
+            return JsonResponse(form.errors, status = 400)
     return render(request, 'components/form.html', context={"form":form})
-    
+
 
 def home_view(request, *args, **kwargs):
     return render(request,"pages/home.html", context={}, status = 200)

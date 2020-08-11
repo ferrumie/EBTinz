@@ -29,7 +29,6 @@ loading...
 <script>
     function tinCreateFormDidSubmit(event) {
   event.preventDefault()
-  console.log(event) 
   const myForm = event.target
   const myFormData = new FormData(myForm)
   const url = myForm.getAttribute("action")
@@ -49,9 +48,14 @@ loading...
       tinzContainerElement.innerHTML = newTinElement + ogHtml
 
       
+    }  else if (xhr.status === 400){
+        const errorJson = xhr.response
+        console.log(errorJson)
     }
-    
-  }
+    xhr.onerror = function(){
+        alert("An error occured. Please try again")
+    }
+  } 
   xhr.send(myFormData) 
 }
 const tinCreateFormEl = document.getElementById("tin-create-form")
