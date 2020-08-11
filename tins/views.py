@@ -9,13 +9,14 @@ from django.utils.http import is_safe_url
 
 ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 def tin_create_view(request, *args, **kwargs):
+    print("ajax",request.is_ajax())
     form = TinsForm(request.POST or None)
     next_url = request.POST.get("next") or None
     if form.is_valid():
         obj = form.save(commit=False)
         obj.save()
         if request.is_ajax():
-            return JsonResponse({}, status=201) 
+            return JsonResponse(obj.serialize(), status=201) 
         if next_url != None and is_safe_url(next_url,ALLOWED_HOSTS):
             return redirect(next_url)
         form = TinsForm()
@@ -41,7 +42,7 @@ def tin_detail_view(request, tweet_id, *args, **kwargs):
 
 def tin_list_view(request, *args, **kwargs):
     qs = Tins.objects.all()
-    tins_list = [{"id":x.id, "content": x.content, "likes":random.randint(0,100)} for x in qs]
+    tins_list = [x.serialize() for x in qs]
 
     data = {
         "response":tins_list
