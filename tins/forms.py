@@ -3,7 +3,7 @@ from django import forms
 from .models import Tins
 
 
-MAX_TIN_LENGTH = 300
+MAX_TIN_LENGTH = settings.MAX_TIN_LENGTH
 class TinsForm(forms.ModelForm):
     class Meta:
         model = Tins

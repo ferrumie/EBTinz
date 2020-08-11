@@ -46,6 +46,7 @@ loading...
       const newTinElement = formatTinElement(newTin)
       const ogHtml = tinzContainerElement.innerHTML
       tinzContainerElement.innerHTML = newTinElement + ogHtml
+      myForm.reset()
 
       
     }  else if (xhr.status === 400){

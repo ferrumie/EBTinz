@@ -1,2 +1,4 @@
 pipfile
 Pipfile.lock
+todo.md
+db.sqlite3
